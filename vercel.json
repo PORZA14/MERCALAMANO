@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/public-data.ts": {
+      "includeFiles": ["data/db.json"]
+    }
+  }
+}
