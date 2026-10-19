@@ -1,7 +1,12 @@
 import type { Request, Response } from 'express';
 import { db } from '../server/db.ts';
 
-export default function handler(_req: Request, res: Response) {
+export default async function handler(_req: Request, res: Response) {
+  try {
+    await db.sync();
+  } catch {
+    return res.status(503).json({ success: false, error: 'No se pudo cargar la información guardada' });
+  }
   const data = db.getData();
   const sortedTools = [...data.tools]
     .filter((tool) => tool.isActive)

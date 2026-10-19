@@ -21,6 +21,7 @@ import {
 } from '../../api/client';
 import { MONTH_NAMES } from '../../utils/calendar';
 import { compressImageFile } from '../../utils/image';
+import { uploadToCloudinary } from '../../api/uploads';
 
 interface AdminFeaturedMembersTabProps {
   featuredMembers: FeaturedMember[];
@@ -102,14 +103,19 @@ export const AdminFeaturedMembersTab: React.FC<AdminFeaturedMembersTabProps> = (
         quality: 0.88,
         maxFileSizeMb: 12,
       });
+      const blob = await (await fetch(compressedDataUrl)).blob();
+      const uploaded = await uploadToCloudinary(
+        new File([blob], file.name.replace(/\.[^.]+$/, '') + '.jpg', { type: blob.type || 'image/jpeg' }),
+        'featured-members'
+      );
 
       if (editingMember) {
         setEditingMember({
           ...editingMember,
-          photoUrl: compressedDataUrl,
+          photoUrl: uploaded.url,
         });
       }
-      showNotification('Fotografía procesada con éxito');
+      showNotification('Fotografía subida a Cloudinary con éxito');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Error al procesar la fotografía';
       showNotification(msg, true);

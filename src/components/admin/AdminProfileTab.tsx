@@ -14,6 +14,7 @@ import {
 import type { AdminProfile } from '../../types';
 import { updateAdminProfile, resetAdminAvatar } from '../../api/client';
 import { compressImageFile } from '../../utils/image';
+import { uploadToCloudinary } from '../../api/uploads';
 
 interface AdminProfileTabProps {
   adminProfile: AdminProfile | null;
@@ -69,8 +70,11 @@ export const AdminProfileTab: React.FC<AdminProfileTabProps> = ({
 
     try {
       setLoading(true);
+      const blob = await (await fetch(previewAvatar)).blob();
+      const file = new File([blob], 'avatar.jpg', { type: blob.type || 'image/jpeg' });
+      const uploaded = await uploadToCloudinary(file, 'avatars');
       const updated = await updateAdminProfile({
-        avatarUrl: previewAvatar,
+        avatarUrl: uploaded.url,
       });
       onProfileUpdated(updated);
       setPreviewAvatar(null);

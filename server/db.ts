@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
+import { BlobNotFoundError, get, head, put } from '@vercel/blob';
 import type {
   SiteConfig,
   CalendarEvent,
@@ -345,51 +346,143 @@ const DEFAULT_DATA: DatabaseSchema = {
   },
 };
 
+function isBlobEnabled(): boolean {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+}
+
+// The connected Blob store is public, so the data file lives at a pathname derived
+// from the secret token. It's stable across instances but impossible to guess.
+function getBlobPathname(): string {
+  const secret = crypto
+    .createHash('sha256')
+    .update(`mercalamano-db:${process.env.BLOB_READ_WRITE_TOKEN}`)
+    .digest('hex')
+    .slice(0, 40);
+  return `mercalamano/data/db-${secret}.json`;
+}
+
+function normalizeData(parsed: Partial<DatabaseSchema>): DatabaseSchema {
+  return {
+    ...DEFAULT_DATA,
+    ...parsed,
+    siteConfig: {
+      ...DEFAULT_DATA.siteConfig,
+      ...(parsed.siteConfig || {}),
+      adminProfile: parsed.siteConfig?.adminProfile || DEFAULT_DATA.siteConfig.adminProfile,
+      chatbot: {
+        ...DEFAULT_DATA.siteConfig.chatbot,
+        ...(parsed.siteConfig?.chatbot || {}),
+      },
+    },
+    featuredMembers: parsed.featuredMembers || [],
+    auth: parsed.auth || DEFAULT_DATA.auth,
+  } as DatabaseSchema;
+}
+
 class Database {
   private data: DatabaseSchema;
+  private blobEtag: string | undefined;
+  private blobLoaded = false;
+  private pendingWrite: Promise<void> = Promise.resolve();
+  private writeError: unknown = null;
 
   constructor() {
-    this.data = this.loadData();
+    this.data = this.loadLocalData();
   }
 
-  private loadData(): DatabaseSchema {
+  private loadLocalData(): DatabaseSchema {
     try {
-      if (!fs.existsSync(DATA_DIR)) {
-        fs.mkdirSync(DATA_DIR, { recursive: true });
-      }
       if (fs.existsSync(DB_FILE)) {
         const raw = fs.readFileSync(DB_FILE, 'utf-8');
-        const parsed = JSON.parse(raw);
-        return {
-          ...DEFAULT_DATA,
-          ...parsed,
-          siteConfig: {
-            ...DEFAULT_DATA.siteConfig,
-            ...(parsed.siteConfig || {}),
-            adminProfile:
-              parsed.siteConfig?.adminProfile || DEFAULT_DATA.siteConfig.adminProfile,
-            chatbot: {
-              ...DEFAULT_DATA.siteConfig.chatbot,
-              ...(parsed.siteConfig?.chatbot || {}),
-            },
-          },
-          featuredMembers: parsed.featuredMembers || [],
-        };
+        return normalizeData(JSON.parse(raw));
       }
     } catch (err) {
       console.error('Error reading db.json, using defaults:', err);
     }
-    this.saveData(DEFAULT_DATA);
-    return DEFAULT_DATA;
+    return normalizeData(DEFAULT_DATA);
+  }
+
+  /**
+   * Pulls the latest state from Vercel Blob. Uses the ETag so unchanged data
+   * costs a cheap 304. On first run with an empty store, seeds it with the
+   * bundled data/db.json so existing content is preserved.
+   */
+  public async sync(): Promise<void> {
+    if (!isBlobEnabled()) return;
+    await this.pendingWrite;
+    try {
+      if (!this.blobLoaded) {
+        try {
+          await head(getBlobPathname());
+        } catch (err) {
+          if (err instanceof BlobNotFoundError) {
+            this.blobLoaded = true;
+            this.saveData(this.data);
+            await this.flush();
+            return;
+          }
+          throw err;
+        }
+      }
+
+      const result = await get(getBlobPathname(), {
+        access: 'public',
+        useCache: false,
+        ifNoneMatch: this.blobLoaded ? this.blobEtag : undefined,
+      });
+
+      if (!result) return;
+
+      if (result.statusCode === 304) return;
+
+      const raw = await new Response(result.stream).text();
+      this.data = normalizeData(JSON.parse(raw));
+      this.blobEtag = result.blob.etag;
+      this.blobLoaded = true;
+    } catch (err) {
+      console.error('Error loading data from Vercel Blob:', err);
+      if (!this.blobLoaded) throw err;
+    }
+  }
+
+  /** Resolves once every queued write has been persisted. Throws if a write failed. */
+  public async flush(): Promise<void> {
+    await this.pendingWrite;
+    if (this.writeError) {
+      const err = this.writeError;
+      this.writeError = null;
+      throw err;
+    }
   }
 
   private saveData(data: DatabaseSchema): void {
+    const serialized = JSON.stringify(data, null, 2);
+
+    if (isBlobEnabled()) {
+      this.pendingWrite = this.pendingWrite.then(async () => {
+        try {
+          const blob = await put(getBlobPathname(), serialized, {
+            access: 'public',
+            allowOverwrite: true,
+            addRandomSuffix: false,
+            contentType: 'application/json',
+            cacheControlMaxAge: 60,
+          });
+          this.blobEtag = blob.etag;
+        } catch (err) {
+          console.error('Error persisting database to Vercel Blob:', err);
+          this.writeError = err;
+        }
+      });
+      return;
+    }
+
     try {
       if (!fs.existsSync(DATA_DIR)) {
         fs.mkdirSync(DATA_DIR, { recursive: true });
       }
       const tmp = `${DB_FILE}.tmp`;
-      fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf-8');
+      fs.writeFileSync(tmp, serialized, 'utf-8');
       fs.renameSync(tmp, DB_FILE);
     } catch (err) {
       console.error('Error persisting database:', err);
