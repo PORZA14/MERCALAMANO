@@ -58,6 +58,13 @@ export interface AdminAllPayload {
   auditLogs: AuditLog[];
 }
 
+export class AuthExpiredError extends Error {
+  constructor() {
+    super('La sesión expiró');
+    this.name = 'AuthExpiredError';
+  }
+}
+
 export async function fetchPublicData(): Promise<PublicDataPayload> {
   const res = await fetch('/api/public-data');
   if (!res.ok) {
@@ -114,8 +121,11 @@ export async function fetchAdminAll(): Promise<AdminAllPayload> {
   const res = await fetch('/api/admin/all', {
     headers: getAuthHeaders(),
   });
+  if (res.status === 401) {
+    throw new AuthExpiredError();
+  }
   if (!res.ok) {
-    throw new Error('No autorizado o sesión expirada');
+    throw new Error(`Error al cargar el panel (HTTP ${res.status})`);
   }
   const json = await res.json();
   return json.data;

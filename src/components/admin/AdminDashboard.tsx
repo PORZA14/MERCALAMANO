@@ -46,8 +46,10 @@ import type {
   ChatbotConfig,
 } from '../../types';
 import {
+  AuthExpiredError,
+  getStoredToken,
+  removeStoredToken,
   loginAdmin,
-  verifyAuth,
   logoutAdmin,
   fetchAdminAll,
   updateSiteConfig,
@@ -168,15 +170,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   // Check initial authentication
   useEffect(() => {
     if (!isOpen) return;
+    let cancelled = false;
     setCheckingAuth(true);
-    verifyAuth()
-      .then((valid) => {
-        setIsAuthenticated(valid);
-        if (valid) {
-          loadAllAdminData();
-        }
-      })
-      .finally(() => setCheckingAuth(false));
+    if (!getStoredToken()) {
+      setIsAuthenticated(false);
+      setCheckingAuth(false);
+      return;
+    }
+    loadAllAdminData().then((loaded) => {
+      if (cancelled) return;
+      if (loaded) onDataChanged(true);
+      setCheckingAuth(false);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [isOpen]);
 
   const showNotification = (msg: string, isError = false) => {
@@ -189,7 +197,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
   };
 
-  const loadAllAdminData = async () => {
+  const loadAllAdminData = async (): Promise<boolean> => {
     try {
       setLoading(true);
       const res = await fetchAdminAll();
@@ -210,9 +218,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         setChatbotForm(res.siteConfig.chatbot);
       }
       setAuditLogs(res.auditLogs);
+      setIsAuthenticated(true);
+      return true;
     } catch (err: unknown) {
+      if (err instanceof AuthExpiredError) {
+        removeStoredToken();
+        setIsAuthenticated(false);
+        setErrorMsg(null);
+        onDataChanged(false);
+        return false;
+      }
       const message = err instanceof Error ? err.message : 'Error al cargar datos del panel';
       showNotification(message, true);
+      return false;
     } finally {
       setLoading(false);
     }
@@ -272,9 +290,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     try {
       setLoading(true);
       await loginAdmin(passwordInput.trim());
-      setIsAuthenticated(true);
       setPasswordInput('');
-      await loadAllAdminData();
+      const loaded = await loadAllAdminData();
+      if (!loaded) return;
       onDataChanged(true);
       showNotification('Inicio de sesión exitoso');
     } catch (err: unknown) {
