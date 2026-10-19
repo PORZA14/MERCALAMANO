@@ -1,10 +1,16 @@
 {
   "functions": {
-    "api/[...path].ts": {
+    "api/express.ts": {
       "includeFiles": "data/db.json"
     },
     "api/public-data.ts": {
       "includeFiles": "data/db.json"
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/express?route=:path*"
+    }
+  ]
 }
