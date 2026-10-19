@@ -1,0 +1,19 @@
+{
+  "id": "/",
+  "name": "Merc a la Mano 2027 — Partners Campus EAFIT",
+  "short_name": "Merc a la Mano",
+  "description": "Recursos, herramientas y calendario del comité de Mercadeo de Partners Campus EAFIT.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F8FAFD",
+  "theme_color": "#30456B",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
