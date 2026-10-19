@@ -1,8 +1,10 @@
+import './server/env.ts';
 import express, { Request, Response, NextFunction } from 'express';
 import { createServer as createHttpServer } from 'http';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { db } from './server/db.ts';
+import { createUploadSignature } from './server/cloudinary.ts';
 import type { FeaturedMember } from './src/types';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -13,6 +15,29 @@ const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json({ limit: '25mb' }));
 app.use(express.urlencoded({ extended: true, limit: '25mb' }));
+
+// Sync with Vercel Blob before each API request and make sure any change made
+// by the handler is persisted before the response is sent.
+app.use('/api', async (_req: Request, res: Response, next: NextFunction) => {
+  try {
+    await db.sync();
+  } catch {
+    return res.status(503).json({ success: false, error: 'No se pudo cargar la información guardada' });
+  }
+
+  const originalJson = res.json.bind(res);
+  res.json = ((body: unknown) => {
+    db.flush()
+      .then(() => originalJson(body))
+      .catch(() => {
+        res.status(500);
+        originalJson({ success: false, error: 'No se pudieron guardar los cambios. Inténtalo de nuevo.' });
+      });
+    return res;
+  }) as Response['json'];
+
+  next();
+});
 
 // Auth middleware for administrative write operations
 function requireAuth(req: Request, res: Response, next: NextFunction) {
@@ -525,6 +550,20 @@ app.get('/api/admin/export', requireAuth, (req: Request, res: Response) => {
     auth: { note: 'Credenciales protegidas' },
   };
   return res.json({ success: true, backup: safeData });
+});
+
+// ---------------- MEDIA UPLOADS (CLOUDINARY) ----------------
+
+app.post('/api/admin/uploads/signature', requireAuth, (req: Request, res: Response) => {
+  const folder = typeof req.body?.folder === 'string' ? req.body.folder : 'general';
+  const signature = createUploadSignature(folder);
+  if (!signature) {
+    return res.status(503).json({
+      success: false,
+      error: 'Cloudinary no está configurado. Agrega CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY y CLOUDINARY_API_SECRET.',
+    });
+  }
+  return res.json({ success: true, data: signature });
 });
 
 // ---------------- ADMIN PROFILE CRUD ----------------
