@@ -85,7 +85,7 @@ import { AdminFeaturedMembersTab } from './AdminFeaturedMembersTab';
 interface AdminDashboardProps {
   isOpen: boolean;
   onClose: () => void;
-  onDataChanged: () => void;
+  onDataChanged: (authenticated?: boolean) => void;
 }
 
 type AdminTab =
@@ -275,7 +275,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       setIsAuthenticated(true);
       setPasswordInput('');
       await loadAllAdminData();
-      onDataChanged();
+      onDataChanged(true);
       showNotification('Inicio de sesión exitoso');
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Contraseña incorrecta';
@@ -288,7 +288,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const handleLogout = async () => {
     await logoutAdmin();
     setIsAuthenticated(false);
-    onDataChanged();
+    onDataChanged(false);
     onClose();
   };
 
@@ -309,7 +309,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         showNotification('Evento creado con éxito');
       }
       setEditingEvent(null);
-      await loadAllAdminData();
+      void loadAllAdminData();
       onDataChanged();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Error al guardar evento';
@@ -350,7 +350,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           break;
       }
       setDeleteConfirm(null);
-      await loadAllAdminData();
+      void loadAllAdminData();
       onDataChanged();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Error al eliminar';
@@ -409,7 +409,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         showNotification('Herramienta creada');
       }
       setEditingTool(null);
-      await loadAllAdminData();
+      void loadAllAdminData();
       onDataChanged();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Error al guardar herramienta';
@@ -436,7 +436,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         showNotification('Nueva reunión registrada');
       }
       setEditingMeeting(null);
-      await loadAllAdminData();
+      void loadAllAdminData();
       onDataChanged();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Error al guardar reunión';
@@ -469,7 +469,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         showNotification('Comité añadido con éxito');
       }
       setEditingDrive(null);
-      await loadAllAdminData();
+      void loadAllAdminData();
       onDataChanged();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Error al guardar';
@@ -502,7 +502,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         showNotification('Generación histórica añadida');
       }
       setEditingArchive(null);
-      await loadAllAdminData();
+      void loadAllAdminData();
       onDataChanged();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Error al guardar archivo';

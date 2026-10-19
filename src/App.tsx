@@ -50,9 +50,11 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHash);
   }, [loadData]);
 
-  const handleAdminDataChanged = () => {
-    loadData();
-    verifyAuth().then(setIsAuthenticated);
+  const handleAdminDataChanged = (authenticated?: boolean) => {
+    void loadData();
+    if (authenticated !== undefined) {
+      setIsAuthenticated(authenticated);
+    }
   };
 
   if (loading && !data) {
