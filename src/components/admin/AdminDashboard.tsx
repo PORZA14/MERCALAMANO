@@ -83,6 +83,7 @@ import {
 import { AVAILABLE_ICON_NAMES, renderIcon } from '../../utils/icons';
 import { AdminProfileTab } from './AdminProfileTab';
 import { AdminFeaturedMembersTab } from './AdminFeaturedMembersTab';
+import { TimePicker12h } from './TimePicker12h';
 
 interface AdminDashboardProps {
   isOpen: boolean;
@@ -1026,16 +1027,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
                         <div>
                           <label className="block text-xs font-semibold text-black/80 mb-1">
-                            Hora (Opcional)
+                            Hora (opcional, AM/PM)
                           </label>
-                          <input
-                            type="text"
-                            placeholder="Ej: 16:00"
-                            value={editingEvent.time || ''}
-                            onChange={(e) =>
-                              setEditingEvent({ ...editingEvent, time: e.target.value })
-                            }
-                            className="w-full text-xs px-3 py-2 rounded-xl bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#4E689B]"
+                          <TimePicker12h
+                            value={editingEvent.time}
+                            onChange={(time) => setEditingEvent({ ...editingEvent, time })}
                           />
                         </div>
 
