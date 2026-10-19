@@ -1,0 +1,7 @@
+{
+  "name": "Merc a la Mano 2027 - Partners Campus EAFIT",
+  "description": "Plataforma oficial de centralización de recursos, herramientas, calendario 2027 y seguimiento para el comité de Mercadeo de Partners Campus EAFIT.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

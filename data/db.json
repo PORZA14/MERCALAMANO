@@ -1,0 +1,429 @@
+{
+  "siteConfig": {
+    "heroTitle": "Merc a la Mano 2027",
+    "heroSubtitle": "Todo lo que necesita Mercadeo, en dos clics.",
+    "heroDescription": "El centro de herramientas, recursos y organización del comité de Mercadeo de Partners Campus EAFIT.",
+    "featuredMonth": 2,
+    "calendarInitialMonthMode": "auto",
+    "nextMeeting": {
+      "date": "",
+      "time": "",
+      "location": "",
+      "additionalNotes": "",
+      "isDefined": false
+    },
+    "adminProfile": {
+      "name": "Administrador de Mercadeo",
+      "role": "Partners Campus EAFIT",
+      "avatarUrl": "",
+      "updatedAt": "2026-10-19T01:38:08.240Z"
+    },
+    "lastUpdated": "2026-10-19T01:38:12.461Z"
+  },
+  "events": [],
+  "tools": [
+    {
+      "id": "tool-manual-marca",
+      "name": "Manual de marca",
+      "description": "Consulta los lineamientos visuales, colores, tipografías y usos de la identidad de Partners Campus.",
+      "url": "https://canva.link/rwsylkjvse96vgm",
+      "buttonText": "Abrir manual",
+      "icon": "BookOpen",
+      "order": 1,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "tool-planner-contenido",
+      "name": "Planner de contenido",
+      "description": "Organiza las publicaciones, actividades, responsables y tareas del comité.",
+      "url": "https://planner.cloud.microsoft/ui/web/v1/plan/OxLBKQgTskOkXtVeHRWoa2QAGa_u?tid=99f7b55e-9cbe-467b-8143-919782918afb",
+      "buttonText": "Abrir planner",
+      "icon": "CalendarCheck",
+      "order": 2,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "tool-ideacion",
+      "name": "Ideación",
+      "description": "Comparte ideas, propuestas creativas y oportunidades de contenido para revisarlas en las reuniones del comité.",
+      "url": "https://forms.gle/o2QYntmQdVwZcP4g8",
+      "buttonText": "Compartir una idea",
+      "icon": "Lightbulb",
+      "order": 3,
+      "isActive": true,
+      "isHighlighted": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "tool-portadas-reels",
+      "name": "Portadas de reels",
+      "description": "Encuentra las plantillas, dimensiones y márgenes necesarios para mantener una identidad visual consistente.",
+      "url": "https://canva.link/ye13wr1sg5lf7ft",
+      "buttonText": "Crear portada",
+      "icon": "Video",
+      "order": 4,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "tool-historias",
+      "name": "Historias",
+      "description": "Consulta las plantillas de historias, sus dimensiones y las zonas seguras que debemos respetar.",
+      "url": "https://canva.link/fueiu7y4nwv4t8y",
+      "buttonText": "Crear historia",
+      "icon": "Smartphone",
+      "order": 5,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "tool-parrilla-visual",
+      "name": "Parrilla visual",
+      "description": "Consulta la organización visual del feed, las portadas, los colores y la coherencia de nuestras publicaciones.",
+      "url": "https://canva.link/7ejetr8jvp9qtur",
+      "buttonText": "Consultar parrilla",
+      "icon": "LayoutGrid",
+      "order": 6,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "tool-drive-mercadeo-2027",
+      "name": "Drive de Mercadeo 2027",
+      "description": "Encuentra los documentos, archivos, piezas y recursos de trabajo del comité durante 2027.",
+      "url": "https://drive.google.com/drive/folders/1C5DZtdpzZYgCZqLVq0DL58RWoA0nwXsz?usp=sharing",
+      "buttonText": "Abrir Drive",
+      "icon": "Folder",
+      "order": 7,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    }
+  ],
+  "meetings": [
+    {
+      "id": "meeting-provisional-initial",
+      "date": "2027-01-15",
+      "title": "Espacio de seguimiento del comité (Pendiente de actualización)",
+      "summary": "Espacio destinado a registrar los principales temas tratados, avances y decisiones de la reunión más reciente.",
+      "topics": [
+        "Planificación de objetivos de comunicación 2027",
+        "Coordinación de cronograma de publicaciones y parrilla",
+        "Distribución de responsabilidades del comité"
+      ],
+      "decisions": [
+        "Utilizar Merc a la Mano como punto centralizado de acceso a recursos",
+        "Revisión periódica de tareas y entregas en las sesiones quincenales"
+      ],
+      "notes": "Registra aquí las recomendaciones y recordatorios importantes para el comité.",
+      "nextMeetingDate": "",
+      "tasks": [
+        {
+          "id": "task-1",
+          "description": "Añadir las tareas acordadas, responsables y fechas de seguimiento",
+          "assignee": "Comité de Mercadeo",
+          "dueDate": "2027-01-30",
+          "status": "pending"
+        },
+        {
+          "id": "task-2",
+          "description": "Revisar accesos de Drive institucional y herramientas de Canva",
+          "assignee": "Líder de Mercadeo",
+          "dueDate": "2027-01-22",
+          "status": "in_progress"
+        }
+      ],
+      "createdAt": "2026-10-18T22:27:26.887Z",
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    }
+  ],
+  "committeeDrives": [
+    {
+      "id": "drive-gh",
+      "name": "Gestión Humana",
+      "description": "Documentos y materiales del comité de Gestión Humana.",
+      "url": "https://drive.google.com/drive/folders/10KlRK7_yGZnAcy5Vemluehlnzg9h4_X_?usp=sharing",
+      "icon": "Users",
+      "order": 1,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "drive-internacional",
+      "name": "Internacional",
+      "description": "Recursos y materiales del comité Internacional.",
+      "url": "https://drive.google.com/drive/folders/1xPL_EiF5e3kDfVJLedsNWAzGPxKlQgHU?usp=sharing",
+      "icon": "Globe",
+      "order": 2,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "drive-mercadeo",
+      "name": "Mercadeo",
+      "description": "Archivos de trabajo, piezas y documentos del comité de Mercadeo.",
+      "url": "https://drive.google.com/drive/folders/1WjFDZNlXd5gJZc8JSiGLZge9p1_bbsFv?usp=sharing",
+      "icon": "Megaphone",
+      "order": 3,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "drive-rrpp",
+      "name": "Relaciones Públicas",
+      "description": "Documentos, recursos y materiales del comité de Relaciones Públicas.",
+      "url": "https://drive.google.com/drive/folders/1Wf_XzZcGwggAg5KKFQ5GOiNDtqksL4Hp?usp=sharing",
+      "icon": "Share2",
+      "order": 4,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "drive-social",
+      "name": "Social",
+      "description": "Recursos y documentos del comité Social.",
+      "url": "https://drive.google.com/drive/folders/1N6J25W_j6rQ8izbNUrLHE6UAyq9-0nkH?usp=sharing",
+      "icon": "HeartHandshake",
+      "order": 5,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "drive-fotos",
+      "name": "Fotos de miembros",
+      "description": "Carpeta de fotografías de los integrantes de Partners Campus.",
+      "url": "https://drive.google.com/drive/folders/17jbi9o7KahNyaSDbeRq59xFmYW3pkpwz?usp=sharing",
+      "icon": "Camera",
+      "order": 6,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    }
+  ],
+  "historyArchives": [
+    {
+      "id": "archive-2026",
+      "year": 2026,
+      "title": "MERC 2026",
+      "url": "https://drive.google.com/drive/folders/13YYZI1stHs2yfshFd9J07bxc0X4oI_00",
+      "isPending": false,
+      "order": 1,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "archive-2025",
+      "year": 2025,
+      "title": "MERC 2025",
+      "url": "https://drive.google.com/drive/folders/1VndCdTqkxHUYk2HAZpjpdRwFaLGLSO7p?usp=sharing",
+      "isPending": false,
+      "order": 2,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "archive-2024",
+      "year": 2024,
+      "title": "MERC 2024",
+      "url": "https://drive.google.com/drive/folders/1fTwZ3mR6gKL7a547l9iARvBOzy33yj_D",
+      "isPending": false,
+      "order": 3,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "archive-2023",
+      "year": 2023,
+      "title": "MERC 2023",
+      "url": "",
+      "isPending": true,
+      "order": 4,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "archive-2022",
+      "year": 2022,
+      "title": "MERC 2022",
+      "url": "https://drive.google.com/drive/folders/1h_90mNN-1z4YU2l9bPZ6_Szk40NiWyyx",
+      "isPending": false,
+      "order": 5,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    },
+    {
+      "id": "archive-2021",
+      "year": 2021,
+      "title": "MERC 2021",
+      "url": "https://drive.google.com/drive/folders/12WyGxhrtR2K_VTnkFPM6y3Ptj_5F3BTs",
+      "isPending": false,
+      "order": 6,
+      "isActive": true,
+      "updatedAt": "2026-10-18T22:27:26.887Z"
+    }
+  ],
+  "featuredMembers": [
+    {
+      "id": "member-1792373892461-rv3v",
+      "name": "Mariana Gómez Valencia",
+      "role": "Líder de Contenido Audiovisual",
+      "month": 10,
+      "year": 2026,
+      "photoUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+      "quote": "Por su liderazgo e impecable dedicación en la creación de las campañas de bienvenida y portadas de reels del comité.",
+      "badge": "Creatividad & Liderazgo",
+      "badgeColor": "#FD7C5E",
+      "status": "published",
+      "createdAt": "2026-10-19T01:38:12.461Z",
+      "updatedAt": "2026-10-19T01:38:12.461Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "log-1792373892461-5wxgm",
+      "timestamp": "2026-10-19T01:38:12.461Z",
+      "user": "Admin",
+      "action": "Crear Miembro Destacado",
+      "details": "Reconocimiento registrado: Mariana Gómez Valencia (10/2026)"
+    },
+    {
+      "id": "log-1792373888240-04bcj",
+      "timestamp": "2026-10-19T01:38:08.240Z",
+      "user": "Admin",
+      "action": "Mi perfil",
+      "details": "Fotografía y datos de perfil actualizados"
+    },
+    {
+      "id": "log-1792373884261-klbf5",
+      "timestamp": "2026-10-19T01:38:04.261Z",
+      "user": "Admin",
+      "action": "Autenticación",
+      "details": "Inicio de sesión exitoso"
+    },
+    {
+      "id": "log-1792365597689-jm1o4",
+      "timestamp": "2026-10-18T23:19:57.689Z",
+      "user": "Admin",
+      "action": "Autenticación",
+      "details": "Inicio de sesión exitoso"
+    },
+    {
+      "id": "log-1792363617999-calrs",
+      "timestamp": "2026-10-18T22:46:57.999Z",
+      "user": "Admin",
+      "action": "Configuración General",
+      "details": "Actualización de configuración del sitio y mes inicial"
+    },
+    {
+      "id": "log-1792363617962-m038e",
+      "timestamp": "2026-10-18T22:46:57.962Z",
+      "user": "Admin",
+      "action": "Configuración General",
+      "details": "Actualización de configuración del sitio y mes inicial"
+    },
+    {
+      "id": "log-1792363617944-xnfpv",
+      "timestamp": "2026-10-18T22:46:57.944Z",
+      "user": "Admin",
+      "action": "Autenticación",
+      "details": "Inicio de sesión exitoso"
+    },
+    {
+      "id": "log-1792362687163-xbuv7",
+      "timestamp": "2026-10-18T22:31:27.163Z",
+      "user": "Admin",
+      "action": "Configuración General",
+      "details": "Actualización de configuración del sitio"
+    },
+    {
+      "id": "log-1792362682181-z7g27",
+      "timestamp": "2026-10-18T22:31:22.181Z",
+      "user": "Admin",
+      "action": "Autenticación",
+      "details": "Inicio de sesión exitoso"
+    },
+    {
+      "id": "log-1792362648670-ndfy4",
+      "timestamp": "2026-10-18T22:30:48.670Z",
+      "user": "Admin",
+      "action": "Autenticación",
+      "details": "Inicio de sesión exitoso"
+    },
+    {
+      "id": "log-1792362468198-ym99p",
+      "timestamp": "2026-10-18T22:27:48.198Z",
+      "user": "Admin",
+      "action": "Eliminar Evento",
+      "details": "Evento eliminado: Kickoff Mercadeo 2027"
+    },
+    {
+      "id": "log-1792362468156-1bvaq",
+      "timestamp": "2026-10-18T22:27:48.156Z",
+      "user": "Admin",
+      "action": "Autenticación",
+      "details": "Inicio de sesión exitoso"
+    },
+    {
+      "id": "log-1792362459018-wtk9x",
+      "timestamp": "2026-10-18T22:27:39.018Z",
+      "user": "Admin",
+      "action": "Crear Evento",
+      "details": "Evento creado: Kickoff Mercadeo 2027 (2027-01-20)"
+    },
+    {
+      "id": "log-1792362458999-rtlt4",
+      "timestamp": "2026-10-18T22:27:38.999Z",
+      "user": "Admin",
+      "action": "Autenticación",
+      "details": "Inicio de sesión exitoso"
+    },
+    {
+      "id": "log-1792362454395-eb26o",
+      "timestamp": "2026-10-18T22:27:34.395Z",
+      "user": "Admin",
+      "action": "Autenticación",
+      "details": "Inicio de sesión exitoso"
+    },
+    {
+      "id": "log-init",
+      "timestamp": "2026-10-18T22:27:26.887Z",
+      "user": "Sistema",
+      "action": "Inicialización",
+      "details": "Plataforma Merc a la Mano 2027 inicializada con datos oficiales"
+    }
+  ],
+  "auth": {
+    "salt": "5ce979083a785d64395dd97d451afe4d",
+    "hash": "e356b7076dbc2dd60129ebe24ad1e6fadcad22773878577c34867b320ca374f587f92f75d3ab24dcb0f2fde10c423083b012780963eaa0536b9e6bbadb45a94f",
+    "sessions": {
+      "5dcb27aef6284135ad881012b93b37296b3eef15600d9654ab7eae9517595955": {
+        "createdAt": "2026-10-18T22:27:34.394Z",
+        "expiresAt": "2026-10-25T22:27:34.394Z"
+      },
+      "2e16e82d897a6ebeb0a4748304d23468a66b6efc6ffecac97ae40d2bada78786": {
+        "createdAt": "2026-10-18T22:27:38.998Z",
+        "expiresAt": "2026-10-25T22:27:38.998Z"
+      },
+      "70bed161ed3bb04c76f871e26032ac9308d02d6645728a63389ff74ec1c83130": {
+        "createdAt": "2026-10-18T22:27:48.156Z",
+        "expiresAt": "2026-10-25T22:27:48.156Z"
+      },
+      "bdfdc4a621d203032bf9853e66c9432951b05070e916a8ac4a51c5a824a4a14a": {
+        "createdAt": "2026-10-18T22:31:22.181Z",
+        "expiresAt": "2026-10-25T22:31:22.181Z"
+      },
+      "886e8d12d242ee2e120df1ca842429ca9d90593789608fe8eda05de62b97ee32": {
+        "createdAt": "2026-10-18T22:46:57.944Z",
+        "expiresAt": "2026-10-25T22:46:57.944Z"
+      },
+      "541b3c9ecbf8b6efb35fdaff3ffbeb2b5fb84a03228ba26e82d015aba7227a2c": {
+        "createdAt": "2026-10-18T23:19:57.688Z",
+        "expiresAt": "2026-10-25T23:19:57.688Z"
+      },
+      "6a679093563686a216c12338ae23b8491d75e9a5b07935a171d79ec33f1dd2a2": {
+        "createdAt": "2026-10-19T01:38:04.261Z",
+        "expiresAt": "2026-10-26T01:38:04.261Z"
+      }
+    }
+  }
+}
