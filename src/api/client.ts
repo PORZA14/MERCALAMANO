@@ -74,7 +74,9 @@ export async function fetchPublicData(): Promise<PublicDataPayload> {
   return json.data;
 }
 
-export async function loginAdmin(password: string): Promise<string> {
+export async function loginAdmin(
+  password: string
+): Promise<{ token: string; data: AdminAllPayload }> {
   const res = await fetch('/api/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -85,7 +87,7 @@ export async function loginAdmin(password: string): Promise<string> {
     throw new Error(data.error || 'Contraseña incorrecta');
   }
   setStoredToken(data.token);
-  return data.token;
+  return { token: data.token, data: data.data };
 }
 
 export async function verifyAuth(): Promise<boolean> {

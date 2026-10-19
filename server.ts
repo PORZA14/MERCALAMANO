@@ -107,7 +107,22 @@ app.post('/api/auth/login', (req: Request, res: Response) => {
 
   const token = db.createSession();
   db.commit('Admin', 'Autenticación', 'Inicio de sesión exitoso');
-  return res.json({ success: true, token, message: 'Autenticado correctamente' });
+  const data = db.getData();
+  return res.json({
+    success: true,
+    token,
+    message: 'Autenticado correctamente',
+    data: {
+      siteConfig: data.siteConfig,
+      events: data.events,
+      tools: data.tools,
+      meetings: data.meetings,
+      committeeDrives: data.committeeDrives,
+      historyArchives: data.historyArchives,
+      featuredMembers: data.featuredMembers || [],
+      auditLogs: data.auditLogs,
+    },
+  });
 });
 
 app.get('/api/auth/verify', (req: Request, res: Response) => {

@@ -197,27 +197,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
   };
 
+  const applyAdminData = (res: Awaited<ReturnType<typeof fetchAdminAll>>) => {
+    setSiteConfig(res.siteConfig);
+    if (res.siteConfig.nextMeeting) {
+      setNextMeetingForm(res.siteConfig.nextMeeting);
+    } else {
+      setNextMeetingForm({ date: '', time: '', location: '', additionalNotes: '', isDefined: false });
+    }
+    setEvents(res.events);
+    setTools(res.tools);
+    setMeetings(res.meetings);
+    setDrives(res.committeeDrives);
+    setArchives(res.historyArchives);
+    setFeaturedMembers(res.featuredMembers || []);
+    setAdminProfile(res.siteConfig.adminProfile || null);
+    if (res.siteConfig.chatbot) {
+      setChatbotForm(res.siteConfig.chatbot);
+    }
+    setAuditLogs(res.auditLogs);
+  };
+
   const loadAllAdminData = async (): Promise<boolean> => {
     try {
       setLoading(true);
       const res = await fetchAdminAll();
-      setSiteConfig(res.siteConfig);
-      if (res.siteConfig.nextMeeting) {
-        setNextMeetingForm(res.siteConfig.nextMeeting);
-      } else {
-        setNextMeetingForm({ date: '', time: '', location: '', additionalNotes: '', isDefined: false });
-      }
-      setEvents(res.events);
-      setTools(res.tools);
-      setMeetings(res.meetings);
-      setDrives(res.committeeDrives);
-      setArchives(res.historyArchives);
-      setFeaturedMembers(res.featuredMembers || []);
-      setAdminProfile(res.siteConfig.adminProfile || null);
-      if (res.siteConfig.chatbot) {
-        setChatbotForm(res.siteConfig.chatbot);
-      }
-      setAuditLogs(res.auditLogs);
+      applyAdminData(res);
       setIsAuthenticated(true);
       return true;
     } catch (err: unknown) {
@@ -289,12 +293,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     if (!passwordInput.trim()) return;
     try {
       setLoading(true);
-      await loginAdmin(passwordInput.trim());
+      const result = await loginAdmin(passwordInput.trim());
       setIsAuthenticated(true);
       setPasswordInput('');
       onDataChanged(true);
-      const loaded = await loadAllAdminData();
-      if (loaded) showNotification('Inicio de sesión exitoso');
+      applyAdminData(result.data);
+      showNotification('Inicio de sesión exitoso');
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Contraseña incorrecta';
       showNotification(message, true);
