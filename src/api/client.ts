@@ -61,7 +61,7 @@ export interface AdminAllPayload {
 export async function fetchPublicData(): Promise<PublicDataPayload> {
   const res = await fetch('/api/public-data');
   if (!res.ok) {
-    throw new Error('Error al cargar datos públicos');
+    throw new Error(`Error al cargar datos públicos (HTTP ${res.status})`);
   }
   const json = await res.json();
   return json.data;
