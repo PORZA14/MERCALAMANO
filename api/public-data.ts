@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { db } from '../server/db';
+import { db } from '../server/db.ts';
 
 export default function handler(_req: Request, res: Response) {
   const data = db.getData();
