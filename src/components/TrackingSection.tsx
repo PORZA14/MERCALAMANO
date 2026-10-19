@@ -17,6 +17,7 @@ import { motion } from 'motion/react';
 import type { MeetingRecord, NextMeetingConfig, SiteConfig, TaskItem } from '../types';
 import { MotionReveal } from './MotionReveal';
 import { formatEventDate } from '../utils/calendar';
+import { AddToCalendarButtons } from './AddToCalendarButtons';
 
 interface TrackingSectionProps {
   meetings: MeetingRecord[];
@@ -111,6 +112,16 @@ export const TrackingSection: React.FC<TrackingSectionProps> = ({
                       <h3 className="text-base sm:text-lg font-bold tracking-tight">
                         {activeMeeting.title}
                       </h3>
+                      <div className="mt-2">
+                        <AddToCalendarButtons
+                          compact
+                          item={{
+                            title: activeMeeting.title,
+                            date: activeMeeting.date,
+                            description: activeMeeting.summary,
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -224,6 +235,18 @@ export const TrackingSection: React.FC<TrackingSectionProps> = ({
                                     </span>
                                   )}
                                 </div>
+                                <AddToCalendarButtons
+                                  compact
+                                  item={{
+                                    title: task.description,
+                                    date: task.dueDate || activeMeeting.date,
+                                    description: [
+                                      `Tarea de la reunión: ${activeMeeting.title}`,
+                                      task.assignee ? `Responsable: ${task.assignee}` : '',
+                                      task.dueDate ? '' : 'Sin fecha límite definida; se agregó en la fecha de la reunión.',
+                                    ].filter(Boolean).join('\n'),
+                                  }}
+                                />
                               </div>
                             );
                           })}
@@ -331,6 +354,17 @@ export const TrackingSection: React.FC<TrackingSectionProps> = ({
                           {nextMeeting.additionalNotes}
                         </p>
                       </div>
+                    )}
+                    {nextMeeting?.date && (
+                      <AddToCalendarButtons
+                        item={{
+                          title: 'Próxima reunión de Mercadeo',
+                          date: nextMeeting.date,
+                          time: nextMeeting.time,
+                          description: nextMeeting.additionalNotes,
+                          location: nextMeeting.location,
+                        }}
+                      />
                     )}
                   </div>
                 ) : (

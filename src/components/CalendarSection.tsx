@@ -24,6 +24,7 @@ import {
   getBogotaCurrentDate,
 } from '../utils/calendar';
 import { MotionReveal } from './MotionReveal';
+import { AddToCalendarButtons } from './AddToCalendarButtons';
 
 interface CalendarSectionProps {
   events: CalendarEvent[];
@@ -477,6 +478,18 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
                     </a>
                   </div>
                 )}
+
+                <div className="mb-4 space-y-2">
+                  <p className="text-[11px] font-semibold text-black/60">Agregar al calendario</p>
+                  <AddToCalendarButtons
+                    item={{
+                      title: selectedEvent.title,
+                      date: selectedEvent.date,
+                      time: selectedEvent.time,
+                      description: selectedEvent.description,
+                    }}
+                  />
+                </div>
 
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-black/50">
                   <span>Partners Campus EAFIT</span>
