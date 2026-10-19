@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/public-data.ts": {
-      "includeFiles": ["data/db.json"]
+      "includeFiles": "data/db.json"
     }
   }
 }
