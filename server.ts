@@ -870,7 +870,11 @@ async function setupFrontend() {
   });
 }
 
-setupFrontend().catch((err) => {
-  console.error('Failed to start server:', err);
-  process.exit(1);
-});
+export { app };
+
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  setupFrontend().catch((err) => {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  });
+}
