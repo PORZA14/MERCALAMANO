@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
+import { createServer as createHttpServer } from 'http';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { db } from './server/db.ts';
@@ -840,11 +841,19 @@ app.put('/api/admin/chatbot', requireAuth, (req: Request, res: Response) => {
 
 async function setupFrontend() {
   const isProduction = process.env.NODE_ENV === 'production';
+  const httpServer = createHttpServer(app);
 
   if (!isProduction) {
     const { createServer: createViteServer } = await import('vite');
+    const hmrDisabled = process.env.DISABLE_HMR === 'true';
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        // Share the app's HTTP server so the HMR WebSocket is reachable through the preview proxy
+        // instead of Vite's default standalone port (24678).
+        hmr: hmrDisabled ? false : { server: httpServer },
+        allowedHosts: true,
+      },
       appType: 'spa',
     });
     app.use(vite.middlewares);
@@ -856,7 +865,7 @@ async function setupFrontend() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  httpServer.listen(PORT, '0.0.0.0', () => {
     console.log(`Merc a la Mano 2027 server running on http://0.0.0.0:${PORT}`);
   });
 }
