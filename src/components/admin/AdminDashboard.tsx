@@ -290,11 +290,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     try {
       setLoading(true);
       await loginAdmin(passwordInput.trim());
+      setIsAuthenticated(true);
       setPasswordInput('');
-      const loaded = await loadAllAdminData();
-      if (!loaded) return;
       onDataChanged(true);
-      showNotification('Inicio de sesión exitoso');
+      const loaded = await loadAllAdminData();
+      if (loaded) showNotification('Inicio de sesión exitoso');
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Contraseña incorrecta';
       showNotification(message, true);
